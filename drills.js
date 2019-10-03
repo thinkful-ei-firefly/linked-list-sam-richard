@@ -118,11 +118,11 @@ class LinkedList {
         return currNode;
     }
     log() {
-      let tempNode=this.head
-      while (tempNode !== null) {
-        console.log(tempNode.value);
-        tempNode=tempNode.next
-      }
+        let tempNode=this.head;
+        while (tempNode !== null) {
+            console.log(tempNode.value);
+            tempNode=tempNode.next;
+        }
     }
 }
 
@@ -150,81 +150,138 @@ function main() {
 
     SLL.insertBefore('Athena', 'Boomer');
     SLL.insertAfter('Hotdog', 'Helo');
-    SLL.insertAt('Kat', 3)
-    SLL.remove('Tauhida')
+    SLL.insertAt('Kat', 3);
+    SLL.remove('Tauhida');
 
     // console.log(SLL);
     // SLL.log();
     // display(SLL);
     // console.log(size(emptyList));
     // console.log(isEmpty(emptyList));
-    console.log(findPrevious(emptyList, 'Boomer'))
+    // console.log(findPrevious(emptyList, 'Boomer'));
     // console.log(findLast(emptyList))
+    // display(iReverseList(SLL));
+    // console.log(thirdFromLast(SLL));
+    // console.log(getMiddle(emptyList)); //null
+    // display(SLL);
+    // console.log(getMiddle(SLL)); //kat
+    // SLL.remove('Boomer');
+    // display(SLL);
+    // console.log(getMiddle(SLL)); //helo
+
 }
+
+const getMiddle = (list) => {
+    //size/2 round up
+    //8 -> 4
+    //4 (1, 2, 3, 4) -> size = 4/2 -> 2
+    //3 (2, 3, 4) -> 3
+    //do we have list.head -> null
+    if(!list.head) {
+        return null;
+    }
+    //is list.head.next = null -> head
+    if(list.head.next === null) {
+        return list.head;
+    }
+    let s= size(list);
+    let center;
+    if(s % 2 === 0) {
+        center = s/2 -1; 
+    } else {
+        center = Math.floor(s/2);
+    }
+    let counter = 0;
+    let tempNode = list.head;
+    while(tempNode !== null) {
+        if(counter === center) {
+            return tempNode;
+        }
+        counter ++;
+        tempNode = tempNode.next;
+    }
+} 
+
+
+const thirdFromLast = (list) => {
+    if (!list.head) {
+        return null;
+    }
+    let tempNode=list.head;
+    while (tempNode.next.next.next !==null) {
+        tempNode = tempNode.next;
+    }
+    return tempNode;
+};
 
 const display = (list) => {
-  let tempNode=list.head
-      while (tempNode !== null) {
+    let tempNode=list.head;
+    while (tempNode !== null) {
         console.log(tempNode.value);
-        tempNode=tempNode.next
-      }
-}
+        tempNode=tempNode.next;
+    }
+};
 
 const size = (list) => {
-  let counter = 0;
-  let tempNode=list.head;
-  while (tempNode !== null) {
-    counter++;
-    tempNode=tempNode.next
-  }
-  return counter
-}
+    let counter = 0;
+    let tempNode=list.head;
+    while (tempNode !== null) {
+        counter++;
+        tempNode=tempNode.next;
+    }
+    return counter;
+};
 
 const isEmpty = (list) => {
-  return !list.head;
-}
+    return !list.head;
+};
 
 const findPrevious = (list, item) => {
-  if (!list.head) {
-    return null
-  }
-  if (list.head.value === item) {
-    return null
-  }
-  let tempNode=list.head
-  while(tempNode.next !== null) {
-    if (tempNode.next.value === item) {
-      return tempNode
+    if (!list.head) {
+        return null;
     }
-    tempNode = tempNode.next;
-  }
-  return null;
-}
+    if (list.head.value === item) {
+        return null;
+    }
+    let tempNode=list.head;
+    while(tempNode.next !== null) {
+        if (tempNode.next.value === item) {
+            return tempNode;
+        }
+        tempNode = tempNode.next;
+    }
+    return null;
+};
 
 const findLast = (list) => {
-  if (!list.head) {
-    return null
-  }
-  let tempNode=list.head
-  while (tempNode.next !==null) {
-    tempNode = tempNode.next;
-  }
-  return tempNode;
-}
+    if (!list.head) {
+        return null;
+    }
+    let tempNode=list.head;
+    while (tempNode.next !==null) {
+        tempNode = tempNode.next;
+    }
+    return tempNode;
+};
 
 //4. Mystery Program
 //The program looks for duplicates in a linked list and removes
 //redundant entries.
 //The time complexity is quadratic, n^2
 
-const reverseList = (list) => {
-  let tempNode = list.head;
-  while (tempNode !== null) {
-    const nextNode = tempNode.next
-    const nextNextNode = tempNode.next.next
-    tempNode.next.next = tempNode
-    tempNode.next = nextNextNode
-  }
-}
+const iReverseList = (list) => {
+    let tempNode = list.head; // 1
+    // 1, 2, 3, 4, 5,
+    // 1, 2 push 2 to front -> 2, 1, 3, 4, 5
+    while (tempNode.next !== null) {
+        //adds next value to begining/head
+        list.insertFirst(tempNode.next.value); 
+        //remove next
+        tempNode.next = tempNode.next.next;
+    }
+    return list;
+};
+
+//rReverseList() {}
 
 main();
