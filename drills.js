@@ -168,6 +168,9 @@ function main() {
     // SLL.remove('Boomer');
     // display(SLL);
     // console.log(getMiddle(SLL)); //helo
+    // const node = SLL.find('Starbuck')
+    // node.next = SLL.head
+    // console.log(cycleList(SLL));
 
 }
 
@@ -283,5 +286,18 @@ const iReverseList = (list) => {
 };
 
 //rReverseList() {}
+
+const cycleList = (list) => {
+  let previousNodes = [];
+  let tempNode = list.head
+  while (tempNode.next !== null) {
+    if (previousNodes.includes(tempNode.next)) {
+      return true
+    }
+    previousNodes.push(tempNode)
+    tempNode = tempNode.next
+  }
+  return false
+}
 
 main();
