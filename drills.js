@@ -67,8 +67,7 @@ class LinkedList {
             return;
         }
         if(counter === index - 1) {
-            const newNode = new _Node(item, currNode.next.next);
-            currNode.next = newNode;
+            currNode.next = new _Node(item, currNode.next);
             return;
         }
         else {
@@ -118,6 +117,13 @@ class LinkedList {
 
         return currNode;
     }
+    log() {
+      let tempNode=this.head
+      while (tempNode !== null) {
+        console.log(tempNode.value);
+        tempNode=tempNode.next
+      }
+    }
 }
 
 class _Node {
@@ -130,6 +136,7 @@ class _Node {
 
 function main() {
     let SLL = new LinkedList();
+    let emptyList = new LinkedList();
 
     SLL.insertLast('Apollo');
     SLL.insertLast('Boomer');
@@ -141,11 +148,83 @@ function main() {
 
     SLL.remove('squirrel');
 
-    SLL.insertAt('Lee', 1);
+    SLL.insertBefore('Athena', 'Boomer');
+    SLL.insertAfter('Hotdog', 'Helo');
+    SLL.insertAt('Kat', 3)
+    SLL.remove('Tauhida')
 
-    SLL.insertAfter('Balter', 'Tauhida');
+    // console.log(SLL);
+    // SLL.log();
+    // display(SLL);
+    // console.log(size(emptyList));
+    // console.log(isEmpty(emptyList));
+    console.log(findPrevious(emptyList, 'Boomer'))
+    // console.log(findLast(emptyList))
+}
 
-    console.log(SLL);
+const display = (list) => {
+  let tempNode=list.head
+      while (tempNode !== null) {
+        console.log(tempNode.value);
+        tempNode=tempNode.next
+      }
+}
+
+const size = (list) => {
+  let counter = 0;
+  let tempNode=list.head;
+  while (tempNode !== null) {
+    counter++;
+    tempNode=tempNode.next
+  }
+  return counter
+}
+
+const isEmpty = (list) => {
+  return !list.head;
+}
+
+const findPrevious = (list, item) => {
+  if (!list.head) {
+    return null
+  }
+  if (list.head.value === item) {
+    return null
+  }
+  let tempNode=list.head
+  while(tempNode.next !== null) {
+    if (tempNode.next.value === item) {
+      return tempNode
+    }
+    tempNode = tempNode.next;
+  }
+  return null;
+}
+
+const findLast = (list) => {
+  if (!list.head) {
+    return null
+  }
+  let tempNode=list.head
+  while (tempNode.next !==null) {
+    tempNode = tempNode.next;
+  }
+  return tempNode;
+}
+
+//4. Mystery Program
+//The program looks for duplicates in a linked list and removes
+//redundant entries.
+//The time complexity is quadratic, n^2
+
+const reverseList = (list) => {
+  let tempNode = list.head;
+  while (tempNode !== null) {
+    const nextNode = tempNode.next
+    const nextNextNode = tempNode.next.next
+    tempNode.next.next = tempNode
+    tempNode.next = nextNextNode
+  }
 }
 
 main();
